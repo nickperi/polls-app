@@ -56,7 +56,8 @@ ROOT_URLCONF = "mysite.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
+
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -121,11 +122,16 @@ STATICFILES_DIRS = [
     BASE_DIR / "polls" / "static",
 ]
 
-STATIC_URL = "polls/static/"
-STATIC_ROOT = BASE_DIR / "polls" / "staticfiles"
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = "polls/media/"
+MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "polls" / "media"
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
