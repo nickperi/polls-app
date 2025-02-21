@@ -14,7 +14,18 @@ class IndexView(generic.ListView):
     template_name = "polls/index.html"
 
     def get_queryset(self):
+<<<<<<< Updated upstream
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+=======
+        """
+        Return the last five published questions (not including those set to be
+        published in the future).
+        """
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[
+            :5
+        ]
+
+>>>>>>> Stashed changes
 
 class DetailView(generic.DetailView):
     model = Question
