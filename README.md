@@ -23,3 +23,12 @@ python manage.py collectstatic
 ```python
 python manage.py runserver
 ```
+
+## Admin Site
+
+![image](https://github.com/user-attachments/assets/443ebbe0-b160-4af1-98cc-2a7526c9f749)
+
+
+
+
+
