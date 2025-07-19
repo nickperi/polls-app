@@ -1,12 +1,17 @@
 from django.db.models import F
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
+
 from django.utils import timezone
 
-from .models import Choice, Question
+from .models import Voter, Choice, Question, User_Question
 
 # Create your views here.
 class IndexView(generic.ListView):
@@ -14,9 +19,6 @@ class IndexView(generic.ListView):
     template_name = "polls/index.html"
 
     def get_queryset(self):
-<<<<<<< Updated upstream
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
-=======
         """
         Return the last five published questions (not including those set to be
         published in the future).
@@ -25,7 +27,6 @@ class IndexView(generic.ListView):
             :5
         ]
 
->>>>>>> Stashed changes
 
 class DetailView(generic.DetailView):
     model = Question
@@ -40,10 +41,47 @@ class ResultsView(generic.DetailView):
    template_name = "polls/results.html"
 
 
-def vote(request, question_id):
+
+def login_user(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            current_user=Voter.objects.get(email=email)
+            return redirect('index')
+            # Redirect to a success page.
+        else:
+            messages.success(request, ("Invalid username or password... Try again !"))
+            return redirect('/polls/login_user')
+    else:
+        return render(request, 'polls/login.html')
+
+def logout_user(request):
+    logout(request)
+    return render(request, 'polls/login.html')
+
+
+@login_required
+def vote(request, question_id, user_id):
     question = get_object_or_404(Question, pk=question_id)
+    user = get_object_or_404(Voter, pk=user_id)
+    
     try:
-        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+        voted = User_Question.objects.get(user=user, question=question)
+    except User_Question.DoesNotExist:
+        voted = None
+
+    try:
+        if voted is None:
+            if user:
+                selected_choice = question.choice_set.get(pk=request.POST["choice"])
+                user_question = User_Question(user=user, question=question)
+                user_question.save()
+        else:
+            return redirect('/polls/' + str(question_id) +'/results/')
+
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(

@@ -1,0 +1,9 @@
+<form action="" method="POST">
+    {% csrf_token %}
+    <label for="username">Email</label>
+    <input type="email" name="email" id="username" placeholder="email" autocomplete="off">
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" autocomplete="new-password">
+    <input type="submit" value="Login">
+</form>

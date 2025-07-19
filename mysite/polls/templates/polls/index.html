@@ -6,6 +6,15 @@
     </head>
 
     <body>
+        <ul>
+            {% if user.is_authenticated %}
+                <p>Hello, {{user.first_name}}</p>
+                <li><a href="/polls/logout_user">Logout</a></li>
+            {% else %}
+                <li><a href="/polls/login_user">Login</a></li>
+            {% endif %}
+        </ul>
+
         {% if latest_question_list %}
             <ul>
                 {% for question in latest_question_list %}
