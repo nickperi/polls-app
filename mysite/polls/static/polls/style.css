@@ -12,11 +12,6 @@ html, body {
 }
 
 body {
-<<<<<<< HEAD
-    color: white;
-    background: linear-gradient(#1B1B1B,#003153);
-}
-=======
     background: darkslategrey url("images/background1.png") no-repeat;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: lightblue;
@@ -109,5 +104,3 @@ li a{
     padding-top: 50px;
     padding-bottom: 50px;
 }
-
->>>>>>> 51741f38ba52c51b1564f50db773263cafab41ef
