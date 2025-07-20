@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-@c1a!22kt-$+emb79^9-(!-eyfy96vhok4phxo#aw(6*wux(#8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['polls-app-9k92.onrender.com', '127.0.0.1', 'https://polls-app-9k92.onrender.com']
+ALLOWED_HOSTS = ['polls-app-9k92.onrender.com', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://polls-app-9k92.onrender.com']
 
 
 # Application definition
@@ -150,5 +151,3 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-CSRF_TRUSTED_ORIGINS = ['polls-app-9k92.onrender.com', '127.0.0.1', 'https://polls-app-9k92.onrender.com']
