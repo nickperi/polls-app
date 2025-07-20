@@ -23,3 +23,33 @@ python manage.py collectstatic
 ```python
 python manage.py runserver
 ```
+
+## Admin Site Login
+![image](https://github.com/user-attachments/assets/443ebbe0-b160-4af1-98cc-2a7526c9f749)
+
+## Admin Dashboard
+![image](https://github.com/user-attachments/assets/deed9a9e-fbd1-403a-8296-b1061948b1e8)
+
+## Adding Poll Question and Choices
+![image](https://github.com/user-attachments/assets/c2db5894-8425-4d5e-aa91-6e4baead351c)
+![image](https://github.com/user-attachments/assets/0d22e710-6fb4-47b2-ad66-f3e72a8227eb)
+
+
+## User Viewing Recent Questions
+![image](https://github.com/user-attachments/assets/dc83dcbd-849c-428e-839e-26a99a33fc03)
+
+## User Answering Question (Voting)
+![image](https://github.com/user-attachments/assets/3835b07d-4c88-4d4c-a74d-ee7c9775bd94)
+
+## User Viewing Poll Results
+![image](https://github.com/user-attachments/assets/f9cc5c64-c0d3-4599-a933-2fe9ef3ccb2a)
+
+
+
+
+
+
+
+
+
+

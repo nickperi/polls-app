@@ -27,6 +27,7 @@ SECRET_KEY = "django-insecure-@c1a!22kt-$+emb79^9-(!-eyfy96vhok4phxo#aw(6*wux(#8
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['polls-app-9k92.onrender.com']
 
 
 # Application definition
@@ -77,9 +78,21 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+'''DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+    }
+}'''
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "polls_db_119h",
+        "USER": "polls_db_119h_user",
+        "PASSWORD": "WPCJmREK0CQuLkyvE4reaF6SzcP4FCvC",
+        "HOST": "dpg-d1uap1idbo4c73ecj2o0-a.oregon-postgres.render.com",
+        "PORT": "5432",
     }
 }
 
@@ -101,6 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTH_USER_MODEL = "polls.Voter"
 
 
 # Internationalization

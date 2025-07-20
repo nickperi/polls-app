@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,3 +19,18 @@
     </body>
 </html>
 
+=======
+{% extends "polls/index.html" %}
+
+{% block content %}
+<h1>{{ question.question_text }}</h1>
+
+<ul class="results">
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a id="vote-url" href="{% url 'polls:detail' question.id %}">Vote again?</a>
+{% endblock %}
+>>>>>>> 51741f38ba52c51b1564f50db773263cafab41ef
