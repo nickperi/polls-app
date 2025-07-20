@@ -1,9 +1,22 @@
-<form action="" method="POST">
-    {% csrf_token %}
-    <label for="username">Email</label>
-    <input type="email" name="email" id="username" placeholder="email" autocomplete="off">
+{% extends "polls/index.html" %}
 
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" autocomplete="new-password">
-    <input type="submit" value="Login">
+{% block content %}
+<form action="" method="POST" class="login">
+    {% csrf_token %}
+
+    <!-- Email input -->
+    <div data-mdb-input-init class="form-outline mb-4" id="email-field">
+        <input type="email" name="email" id="form2Example1" class="form-control" />
+        <label class="form-label" for="form2Example1">Email address</label>
+    </div>
+
+    <!-- Password input -->
+    <div data-mdb-input-init class="form-outline mb-4" id="password-field">
+        <input type="password" name="password" id="form2Example2" class="form-control" />
+        <label class="form-label" for="form2Example2">Password</label>
+    </div>
+
+    <!-- Submit button -->
+    <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" value="Log in"></input>
 </form>
+{% endblock %}

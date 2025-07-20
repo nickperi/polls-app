@@ -1,7 +1,10 @@
+{% extends "polls/index.html" %}
 
+{% block content %}
 <form action="{% url 'polls:vote' question.id user.id%}" method="post">
     {% csrf_token %}
-    <fieldset>
+    
+    <fieldset class="choices">
         <legend><h1>{{ question.question_text }}</h1></legend>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -10,5 +13,7 @@
             <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
     </fieldset>
+
     <input type="submit" value="Vote">
 </form>
+{% endblock %}

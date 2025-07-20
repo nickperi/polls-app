@@ -60,7 +60,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render(request, 'polls/login.html')
+    return redirect('/polls/login_user')
 
 
 @login_required
@@ -79,7 +79,9 @@ def vote(request, question_id, user_id):
                 selected_choice = question.choice_set.get(pk=request.POST["choice"])
                 user_question = User_Question(user=user, question=question)
                 user_question.save()
+                messages.success(request, 'Your action was successful!')
         else:
+            messages.success(request, 'You already voted on this question!')
             return redirect('/polls/' + str(question_id) +'/results/')
 
     except (KeyError, Choice.DoesNotExist):
