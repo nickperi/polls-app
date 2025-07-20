@@ -150,3 +150,5 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CSRF_TRUSTED_ORIGINS = ['polls-app-9k92.onrender.com', '127.0.0.1', 'https://polls-app-9k92.onrender.com']
