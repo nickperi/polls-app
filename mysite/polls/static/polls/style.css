@@ -1,7 +1,12 @@
+html {
+    height: 100%;
+}
+
 li a {
     color: green;
 }
 
 body {
-    background: white url("images/background.jpg") no-repeat;
+    color: white;
+    background: linear-gradient(#1B1B1B,#003153);
 }
