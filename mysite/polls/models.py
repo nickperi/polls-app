@@ -107,4 +107,5 @@ class Voter(AbstractBaseUser):
 class User_Question(models.Model):
     user = models.ForeignKey(Voter, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 

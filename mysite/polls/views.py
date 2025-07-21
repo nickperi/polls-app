@@ -75,19 +75,22 @@ def vote(request, question_id, user_id):
     user = get_object_or_404(Voter, pk=user_id)
     
     try:
-        voted = User_Question.objects.get(user=user, question=question)
+        vote = User_Question.objects.get(user=user, question=question)
     except User_Question.DoesNotExist:
-        voted = None
+        vote = None
 
     try:
-        if voted is None:
+        if vote is None:
             if user:
                 selected_choice = question.choice_set.get(pk=request.POST["choice"])
-                user_question = User_Question(user=user, question=question)
+                user_question = User_Question(user=user, question=question, choice=selected_choice)
                 user_question.save()
                 messages.success(request, 'Your vote was successful!')
         else:
-            messages.success(request, 'You already voted on this question!')
+            selected_choice = question.choice_set.get(pk=request.POST["choice"])
+            vote.choice = selected_choice
+            vote.save()
+            messages.success(request, 'You vote was successfully updated!')
             return redirect('/polls/' + str(question_id) +'/results/')
 
     except (KeyError, Choice.DoesNotExist):
