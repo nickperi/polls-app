@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Subquery
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
@@ -14,16 +14,25 @@ from django.utils import timezone
 from .models import Voter, Choice, Question, User_Question
 
 # Create your views here.
-class IndexView(generic.ListView):
-    context_object_name = "latest_question_list"
+class IndexView(generic.TemplateView):
+    #context_object_name = "latest_question_list"
     template_name = "polls/index.html"
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        answered_question_ids = User_Question.objects.values('question')
+
+        context['answered_question_list'] = Question.objects.filter(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+        context['unanswered_question_list'] = Question.objects.exclude(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+
+        return context
+
+    '''def get_queryset(self):
         """
         Return the last five published questions (not including those set to be
         published in the future).
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5] '''
 
 class DetailView(generic.DetailView):
     model = Question
@@ -76,7 +85,7 @@ def vote(request, question_id, user_id):
                 selected_choice = question.choice_set.get(pk=request.POST["choice"])
                 user_question = User_Question(user=user, question=question)
                 user_question.save()
-                messages.success(request, 'Your action was successful!')
+                messages.success(request, 'Your vote was successful!')
         else:
             messages.success(request, 'You already voted on this question!')
             return redirect('/polls/' + str(question_id) +'/results/')
