@@ -1,0 +1,12 @@
+{% extends "polls/index.html" %}
+
+{% block content %}
+<h1>{{ choice.choice_text }}</h1>
+
+<ul class="choice-voters">
+{% for voter in voters %}
+    <li>{{ voter }} </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

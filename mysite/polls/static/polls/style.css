@@ -49,6 +49,14 @@ li a{
     text-decoration: none;
 }
 
+#vote-count {
+    text-decoration: none;
+}
+
+#vote-count:hover {
+    color:aqua;
+}
+
 .menu-bar {
     background-color: indigo;
     padding-top: 5px;

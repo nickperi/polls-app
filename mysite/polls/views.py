@@ -18,15 +18,6 @@ class IndexView(generic.TemplateView):
     #context_object_name = "latest_question_list"
     template_name = "polls/index.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        answered_question_ids = User_Question.objects.values('question')
-
-        context['answered_question_list'] = Question.objects.filter(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
-        context['unanswered_question_list'] = Question.objects.exclude(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
-
-        return context
-
     '''def get_queryset(self):
         """
         Return the last five published questions (not including those set to be
@@ -34,6 +25,15 @@ class IndexView(generic.TemplateView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5] '''
 
+def profile_view(request, user_id):
+    template_name = "polls/profile.html"
+    answered_question_ids = User_Question.objects.filter(user_id=user_id).values('question')
+    answered_question_list = Question.objects.filter(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+    unanswered_question_list = Question.objects.exclude(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+    context = {'answered_question_list':answered_question_list, 'unanswered_question_list': unanswered_question_list}
+    return render(request, template_name, context)
+
+   
 class DetailView(generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
@@ -47,6 +47,19 @@ class ResultsView(generic.DetailView):
    template_name = "polls/results.html"
 
 
+def choice_view(request, choice_id):
+    choice = Choice.objects.get(id=choice_id)
+    votes = choice.user_question_set.all()
+    voters = []
+
+    for vote in votes:
+        voters.append(Voter.objects.get(id=vote.user_id).first_name + " " + " " + Voter.objects.get(id=vote.user_id).last_name)
+
+    context = {'choice': choice, 'voters':voters}
+    return render(request, 'polls/choice.html', context)
+        
+
+
 
 def login_user(request):
     if request.method == "POST":
@@ -56,7 +69,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             current_user=Voter.objects.get(email=email)
-            return redirect('index')
+            return redirect('/polls/profile/' + str(user.id))
             # Redirect to a success page.
         else:
             messages.success(request, ("Invalid username or password... Try again !"))
@@ -80,19 +93,31 @@ def vote(request, question_id, user_id):
         vote = None
 
     try:
-        if vote is None:
-            if user:
+        if user: 
+            if vote is None:
                 selected_choice = question.choice_set.get(pk=request.POST["choice"])
                 user_question = User_Question(user=user, question=question, choice=selected_choice)
                 user_question.save()
+                selected_choice.votes = F("votes") + 1
+                selected_choice.save()
                 messages.success(request, 'Your vote was successful!')
-        else:
-            selected_choice = question.choice_set.get(pk=request.POST["choice"])
-            vote.choice = selected_choice
-            vote.save()
-            messages.success(request, 'You vote was successfully updated!')
-            return redirect('/polls/' + str(question_id) +'/results/')
+                
+            else:
+                prev_selected_choice = vote.choice
+                selected_choice = question.choice_set.get(pk=request.POST["choice"])
 
+                if selected_choice.choice_text == prev_selected_choice.choice_text:
+                    messages.success(request, 'You already voted for this choice!')
+                else:
+                    prev_selected_choice.votes = F("votes") - 1
+                    prev_selected_choice.save()
+                    vote.choice = selected_choice
+                    vote.save()
+                    selected_choice.votes = F("votes") + 1
+                    selected_choice.save()
+                    messages.success(request, 'Your vote was successfully updated!')
+      
+        
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(
@@ -103,10 +128,11 @@ def vote(request, question_id, user_id):
                 "error_message": "You didn't select a choice.",
             },
         )
+        
     else:
-        selected_choice.votes = F("votes") + 1
-        selected_choice.save()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
+
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+        

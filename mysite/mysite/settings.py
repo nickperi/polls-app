@@ -87,12 +87,13 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "polls_db_119h",
-        "USER": "polls_db_119h_user",
-        "PASSWORD": "WPCJmREK0CQuLkyvE4reaF6SzcP4FCvC",
-        "HOST": "dpg-d1uap1idbo4c73ecj2o0-a.oregon-postgres.render.com",
+        "NAME": "polls_db_njgj",
+        "USER": "polls_db_njgj_user",
+        "PASSWORD": "fgEIp3XfCS5EibQdx6k2WL2GSIFfhDj1",
+        "HOST": "dpg-d1vbisruibrs7398pjd0-a.oregon-postgres.render.com",
         "PORT": "5432",
     }
+    
 }
 
 
