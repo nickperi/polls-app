@@ -26,16 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-#SECRET_KEY = "django-insecure-@c1a!22kt-$+emb79^9-(!-eyfy96vhok4phxo#aw(6*wux(#8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-#DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
-#ALLOWED_HOSTS = ['polls-app-9k92.onrender.com', '127.0.0.1']
-#CSRF_TRUSTED_ORIGINS = ['https://polls-app-9k92.onrender.com']
 
 
 # Application definition
@@ -89,8 +85,6 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": dj_database_url.parse(os.environ.get('DATABASE_URL'))
 }
-
-#DATABASE_URL = os.environ.get('DATABASE_URL')
 
 
 # Password validation
