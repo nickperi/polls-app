@@ -42,9 +42,15 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 
-class ResultsView(generic.DetailView):
-   model = Question
+def results_view(request, user_id, question_id):
    template_name = "polls/results.html"
+   question = get_object_or_404(Question, pk=question_id)
+   my_vote = get_object_or_404(User_Question, user_id=user_id, question_id=question_id)
+   my_choice = get_object_or_404(Choice, pk=my_vote.choice_id)
+   context = {'my_choice': my_choice, 'question':question}
+   return render(request, template_name, context)
+
+    
 
 
 def choice_view(request, choice_id):
@@ -134,5 +140,5 @@ def vote(request, question_id, user_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
 
-        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+        return HttpResponseRedirect(reverse("polls:results", args=(question.id, user_id)))
         

@@ -9,5 +9,7 @@
 {% endfor %}
 </ul>
 
-<!-- <a id="vote-url" href="{% url 'polls:detail' question.id %}">Vote again?</a> -->
+<h3>Your choice: {{ my_choice.choice_text }}</h3>
+
+<a id="vote-url" href="{% url 'polls:detail' question.id %}">Vote again?</a>
 {% endblock %}
