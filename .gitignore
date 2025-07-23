@@ -3,4 +3,4 @@ __pycache__/
 staticfiles/
 .env
 venv/
-mysite/mysite/settings.py
+settings.py
