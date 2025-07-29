@@ -84,13 +84,13 @@ li a{
 .questions-list {
     width: fit-content;
     height: fit-content;
-    margin-block-start: -15px;
-    margin-block-end: 0px;
+    margin-block-start: 10px;
+    margin-block-end: 20px;
 }
 
 .questions {
     position: fixed;
-    margin-block-start: 20px;
+    margin-block-start: 0;
     top: 20vh;
     left: 40vw;
     width: auto;
@@ -100,6 +100,11 @@ li a{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.questions h1 {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 .questions-list li {
