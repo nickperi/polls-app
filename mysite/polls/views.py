@@ -14,9 +14,15 @@ from django.utils import timezone
 from .models import Voter, Choice, Question, User_Question
 
 # Create your views here.
-class IndexView(generic.TemplateView):
+def index_view(request):
     #context_object_name = "latest_question_list"
     template_name = "polls/index.html"
+
+    auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(request.user.id), 'profile', 'My Profile'), ('/polls/logout_user', 'logout', 'Logout')]
+    navigation_bar = [('/', 'index', 'Home'), ('/polls/login_user', 'login', 'Login')]
+    active_page = 'index'
+
+    context = {'navigation_bar':navigation_bar, 'auth_navigation_bar':auth_navigation_bar, 'active_page':active_page}
 
     '''def get_queryset(self):
         """
@@ -24,13 +30,16 @@ class IndexView(generic.TemplateView):
         published in the future).
         """
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5] '''
+    return render(request, template_name, context)
 
 def profile_view(request, user_id):
     template_name = "polls/profile.html"
     answered_question_ids = User_Question.objects.filter(user_id=user_id).values('question')
     answered_question_list = Question.objects.filter(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
     unanswered_question_list = Question.objects.exclude(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
-    context = {'answered_question_list':answered_question_list, 'unanswered_question_list': unanswered_question_list}
+    auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(request.user.id), 'profile', 'My Profile'), ('/polls/logout_user', 'logout', 'Logout')]
+    navigation_bar = [('/', 'index', 'Home'), ('/polls/login_user', 'login', 'Login')]
+    context = {'answered_question_list':answered_question_list, 'unanswered_question_list': unanswered_question_list, 'navigation_bar':navigation_bar, 'auth_navigation_bar':auth_navigation_bar}
     return render(request, template_name, context)
 
    

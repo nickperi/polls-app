@@ -6,12 +6,12 @@
     </head>
 
     <body>
-
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
                 {{ message }}
             </div>
         {% endfor %}
+
 
         <div class="menu-bar">
             {% if user.is_authenticated %}
@@ -19,19 +19,26 @@
             {% endif %}
 
             <ul class="menu-options">
-            {% if user.is_authenticated %}
-                <li><a href="/">Home</a></li>
-                 <li><a href="/polls/profile/{{user.id}}">My Profile</a></li>
-                <li><a href="/polls/logout_user">Logout</a></li>
-            {% else %}
-                <li><a href="/">Home</a></li>
-                <li><a href="/polls/login_user">Login</a></li>
-            {% endif %}
+                {% if user.is_authenticated %}
+                    {% for route, id, label in auth_navigation_bar %}
+                        <li{% if route == request.path %} style="background-color: darkcyan; font-weight: bold;"{% endif %}>
+                        <a href="{{ route }}">{{ label }}</a></li>
+                    {% endfor %}
+
+                {% else %}
+                    {% for route, id, label in navigation_bar %}
+                        <li{% if route == request.path %} style="background-color: darkcyan; font-weight: bold;"{% endif %}>
+                        <a href="{{ route }}">{{ label }}</a></li>
+                    {% endfor %}
+
+                {% endif %}
+                
             </ul>
         </div>
 
         {% block content %}
-
         {% endblock %}
+
+
     </body>
 </html>

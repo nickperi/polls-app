@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", views.IndexView.as_view(), name="index"),
+    path("", views.index_view, name="index"),
     path("polls/", include("polls.urls")),
     path("polls/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
