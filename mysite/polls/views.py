@@ -56,7 +56,8 @@ def results_view(request, user_id, question_id):
    question = get_object_or_404(Question, pk=question_id)
    my_vote = get_object_or_404(User_Question, user_id=user_id, question_id=question_id)
    my_choice = get_object_or_404(Choice, pk=my_vote.choice_id)
-   context = {'my_choice': my_choice, 'question':question}
+   auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/voter'+str(user_id), 'profile', 'My Profile')]
+   context = {'my_choice': my_choice, 'question':question, 'auth_navigation_bar':auth_navigation_bar}
    return render(request, template_name, context)
 
     
@@ -71,7 +72,8 @@ def choice_view(request, choice_id, question_id):
     for vote in votes:
         voters.append(Voter.objects.get(id=vote.user_id).first_name + " " + " " + Voter.objects.get(id=vote.user_id).last_name)
 
-    context = {'choice': choice, 'question':question, 'voters':voters}
+    auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/voter'+str(request.user.id), 'profile', 'My Profile')]
+    context = {'choice': choice, 'question':question, 'voters':voters, 'auth_navigation_bar':auth_navigation_bar}
     return render(request, 'polls/choice.html', context)
         
 
