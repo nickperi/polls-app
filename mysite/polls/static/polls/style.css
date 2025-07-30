@@ -58,7 +58,7 @@ input {
     height: 32px;
 }
 
-#vote-url:hover, #profile-url:hover, #home-url:hover {
+#vote-url:hover, #profile-url:hover, #home-url:hover, #results-url:hover {
     color:darkturquoise;
     font-weight: bold;
 }

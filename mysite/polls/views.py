@@ -62,15 +62,16 @@ def results_view(request, user_id, question_id):
     
 
 
-def choice_view(request, choice_id):
+def choice_view(request, choice_id, question_id):
     choice = Choice.objects.get(id=choice_id)
+    question = Question.objects.get(id=question_id)
     votes = choice.user_question_set.all()
     voters = []
 
     for vote in votes:
         voters.append(Voter.objects.get(id=vote.user_id).first_name + " " + " " + Voter.objects.get(id=vote.user_id).last_name)
 
-    context = {'choice': choice, 'voters':voters}
+    context = {'choice': choice, 'question':question, 'voters':voters}
     return render(request, 'polls/choice.html', context)
         
 

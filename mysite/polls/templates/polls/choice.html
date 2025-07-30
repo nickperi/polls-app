@@ -1,12 +1,14 @@
 {% extends "polls/index.html" %}
 
 {% block content %}
-<h1>{{ choice.choice_text }}</h1>
+<h2>Voters for {{choice.choice_text}} to {{ question.question_text}}:</h2>
 
 <ul class="choice-voters">
 {% for voter in voters %}
     <li>{{ voter }} </li>
 {% endfor %}
 </ul>
+
+<a id="results-url" href="{% url 'polls:results' question.id user.id %}">Back to Question {{question.id}} Results</a>
 
 {% endblock %}

@@ -29,10 +29,10 @@
                     <p>You haven't answered any questions yet.</p>
                 {% endif %}
             </div>
-            <h3><a id="logout-url" href="{% url 'polls:logout' %}">sign out on your way out</a></h3>
+            <h3><a id="logout-url" href="{% url 'polls:logout' %}">Sign out</a></h3>
 
         {% else %}
-            <h3><a id="login-url" href="{% url 'polls:login' %}" style="padding-top: 20px;">sign in to see available polls.</a></h3>
+            <h3><a id="login-url" href="{% url 'polls:login' %}" style="padding-top: 20px;">Sign in to see available polls.</a></h3>
 
         {% endif %}
         </div>
