@@ -4,29 +4,35 @@
         <div class="questions">
         
         {% if user.is_authenticated %}
-            <h1>Questions for you:</h1>
-            {% if unanswered_question_list %}
-                <ul class="questions-list">
-                {% for question in unanswered_question_list %}
-                    <li> <a href="{% url 'polls:detail' question.id %}">{{question.question_text }} </a></li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <p style="padding-top: 20px;">No polls are available.</p>
-            {% endif %}
+            <div class="unanswered-questions">
+                <h1>Questions for you:</h1>
+                {% if unanswered_question_list %}
+                    <ul class="questions-list">
+                    {% for question in unanswered_question_list %}
+                        <li> <a href="{% url 'polls:detail' question.id %}">{{question.question_text }} </a></li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="padding-top: 20px;">No polls are available.</p>
+                {% endif %}
+            </div>
             
-            {% if answered_question_list %} 
-                <h1>Answered Questions:</h1>
-                <ul class="questions-list">
-                {% for question in answered_question_list %}
-                    <li> <a href="{% url 'polls:results' question.id user.id %}"> {{question.question_text}} </a> </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <p>You haven't answered any questions yet.</p>
-            {% endif %}
+            <div class="answered-questions">
+                {% if answered_question_list %} 
+                    <h1>Answered Questions:</h1>
+                    <ul class="questions-list">
+                    {% for question in answered_question_list %}
+                        <li> <a href="{% url 'polls:results' question.id user.id %}"> {{question.question_text}} </a> </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You haven't answered any questions yet.</p>
+                {% endif %}
+            </div>
+            <h3><a id="logout-url" href="{% url 'polls:logout' %}">sign out on your way out</a></h3>
+
         {% else %}
-            <p style="padding-top: 20px;">Sign in to see available polls.</p>
+            <h3><a id="login-url" href="{% url 'polls:login' %}" style="padding-top: 20px;">sign in to see available polls.</a></h3>
 
         {% endif %}
         </div>

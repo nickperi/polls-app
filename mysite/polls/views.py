@@ -18,8 +18,8 @@ def index_view(request):
     #context_object_name = "latest_question_list"
     template_name = "polls/index.html"
 
-    auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(request.user.id), 'profile', 'My Profile'), ('/polls/logout_user', 'logout', 'Logout')]
-    navigation_bar = [('/', 'index', 'Home'), ('/polls/login_user', 'login', 'Login')]
+    auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(request.user.id), 'profile', 'My Profile')]
+    navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(0), 'profile', 'My Profile')]
     active_page = 'index'
 
     context = {'navigation_bar':navigation_bar, 'auth_navigation_bar':auth_navigation_bar, 'active_page':active_page}
@@ -37,8 +37,8 @@ def profile_view(request, user_id):
     answered_question_ids = User_Question.objects.filter(user_id=user_id).values('question')
     answered_question_list = Question.objects.filter(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
     unanswered_question_list = Question.objects.exclude(id__in=Subquery(answered_question_ids), pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
-    auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(request.user.id), 'profile', 'My Profile'), ('/polls/logout_user', 'logout', 'Logout')]
-    navigation_bar = [('/', 'index', 'Home'), ('/polls/login_user', 'login', 'Login')]
+    auth_navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(user_id), 'profile', 'My Profile')]
+    navigation_bar = [('/', 'index', 'Home'), ('/polls/profile/'+str(0), 'profile', 'My Profile')]
     context = {'answered_question_list':answered_question_list, 'unanswered_question_list': unanswered_question_list, 'navigation_bar':navigation_bar, 'auth_navigation_bar':auth_navigation_bar}
     return render(request, template_name, context)
 

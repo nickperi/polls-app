@@ -12,4 +12,6 @@
 <h3>Your choice: {{ my_choice.choice_text }}</h3>
 
 <a id="vote-url" href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<a id="profile-url" href="{% url 'polls:profile' user.id %}">My Profile</a>
+<a id="home-url" href="{% url 'index' %}">Back to Home</a>
 {% endblock %}

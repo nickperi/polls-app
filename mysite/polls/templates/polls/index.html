@@ -14,10 +14,6 @@
 
 
         <div class="menu-bar">
-            {% if user.is_authenticated %}
-                <p>Hello, {{user.first_name}}</p>
-            {% endif %}
-
             <ul class="menu-options">
                 {% if user.is_authenticated %}
                     {% for route, id, label in auth_navigation_bar %}
@@ -37,6 +33,14 @@
         </div>
 
         {% block content %}
+         <div>
+            {% if user.is_authenticated %}
+                <h1>Welcome {{user.first_name}}</h1>
+                <h2><a id="logout-url" href="{% url 'polls:logout' %}">Sign Out</a></h2>
+            {% else %}
+                <h2><a  id="login-url" href="{% url 'polls:login' %}">Welcome Voter, Sign In</a></h2>
+            {% endif %}
+        </div>
         {% endblock %}
 
 

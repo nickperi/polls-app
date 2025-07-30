@@ -2,6 +2,10 @@ html {
     height: 100%;
 }
 
+li {
+    list-style: none;
+}
+
 li a {
     color: lightgreen;
 }
@@ -9,6 +13,18 @@ li a {
 html, body {
     margin: 0;
     padding: 0;
+}
+
+h1, li, p, h2, h3 {
+    text-align: center;
+    font-weight: normal;
+}
+
+a {
+    display: block;
+    text-align: center;
+    color: aquamarine;
+    text-decoration: none;
 }
 
 body {
@@ -22,9 +38,6 @@ p, label {
     text-align: center;
 }
 
-#vote-url {
-    color: aquamarine;
-}
 
 .login {
     
@@ -45,16 +58,18 @@ input {
     height: 32px;
 }
 
-li a{
-    text-decoration: none;
+#vote-url:hover, #profile-url:hover, #home-url:hover {
+    color:darkturquoise;
+    font-weight: bold;
 }
 
-#vote-count {
-    text-decoration: none;
+.questions-list a:hover {
+    color:darkturquoise;
 }
 
 #vote-count:hover {
     color:aqua;
+    font-weight: bold;
 }
 
 .menu-bar {
@@ -81,19 +96,30 @@ li a{
     list-style: none;
 }
 
+#login-url:hover {
+    color:deepskyblue;
+    font-weight:bold;
+}
+
+#logout-url:hover {
+    color: deepskyblue;
+    font-weight:bold;
+}
+
+.answered-questions, .unanswered-questions {
+     background-color: midnightblue;
+     margin-top: 10vh;
+}
+
 .questions-list {
     width: fit-content;
     height: fit-content;
     margin-block-start: 10px;
     margin-block-end: 20px;
-    background-color: midnightblue;
 }
 
 .questions {
-    position: fixed;
     margin-block-start: 0;
-    top: 20vh;
-    left: 40vw;
     width: auto;
     height:auto;
     display: flex;
@@ -108,7 +134,6 @@ li a{
 }
 
 .questions-list li {
-    list-style: none;
     padding-bottom: 5px;
 }
 
